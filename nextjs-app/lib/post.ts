@@ -11,7 +11,7 @@ export function getSortedPostsData(){
     const fileNames = fs.readdirSync(postsDirectory);
     //['pre-rendering.md', ...]
 
-    const allPostsData = fileNames.map(fileName => {
+    const allPostData = fileNames.map(fileName => {
         const id = fileName.replace(/\.md$/, "");
 
         const fullPath = path.join(postsDirectory, fileName);
@@ -21,12 +21,12 @@ export function getSortedPostsData(){
 
         return{
             id,
-            ...matterResult.data as {date: string; title: string}
+            ...allPostData(matterResult.data as {date: string; title: string})
         }
     })
     
     //Sorting
-    return allPostsData.sort((a,b) => {
+    return allPostData.sort((a,b) => {
         if(a.date < b.date){
             return 1
         }else {
